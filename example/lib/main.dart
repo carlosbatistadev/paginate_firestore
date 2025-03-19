@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,21 +36,18 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Scrollbar(
-        isAlwaysShown: true,
+        // isAlwaysShown: true,
         child: PaginateFirestore(
           // Use SliverAppBar in header to make it sticky
           header: const SliverToBoxAdapter(child: Text('HEADER')),
           footer: const SliverToBoxAdapter(child: Text('FOOTER')),
           // item builder type is compulsory.
-          itemBuilderType:
-              PaginateBuilderType.listView, //Change types accordingly
+          itemBuilderType: PaginateBuilderType.listView, //Change types accordingly
           itemBuilder: (context, documentSnapshots, index) {
             final data = documentSnapshots[index].data() as Map?;
             return ListTile(
               leading: const CircleAvatar(child: Icon(Icons.person)),
-              title: data == null
-                  ? const Text('Error in data')
-                  : Text(data['name']),
+              title: data == null ? const Text('Error in data') : Text(data['name']),
               subtitle: Text(documentSnapshots[index].id),
             );
           },
